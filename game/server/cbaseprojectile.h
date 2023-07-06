@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2007, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2007, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:		Base class for simple projectiles
 //
@@ -11,8 +11,8 @@
 #pragma once
 #endif
 
-enum MoveType_t;
-enum MoveCollide_t;
+enum MoveType_t : uint8_t;
+enum MoveCollide_t : uint8_t;
 
 //=============================================================================
 //=============================================================================
