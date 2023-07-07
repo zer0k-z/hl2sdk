@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -141,29 +141,26 @@
 #define FL_FREEZING				(1<<31) // We're becoming frozen!
 
 // edict->movetype values
-enum MoveType_t
-{
-	MOVETYPE_NONE		= 0,	// never moves
-	MOVETYPE_ISOMETRIC,			// For players -- in TF2 commander view, etc.
-	MOVETYPE_WALK,				// Player only - moving on the ground
-	MOVETYPE_STEP,				// gravity, special edge handling -- monsters use this
-	MOVETYPE_FLY,				// No gravity, but still collides with stuff
-	MOVETYPE_FLYGRAVITY,		// flies through the air + is affected by gravity
-	MOVETYPE_VPHYSICS,			// uses VPHYSICS for simulation
-	MOVETYPE_PUSH,				// no clip to world, push and crush
-	MOVETYPE_NOCLIP,			// No gravity, no collisions, still do velocity/avelocity
-	MOVETYPE_LADDER,			// Used by players only when going onto a ladder
-	MOVETYPE_OBSERVER,			// Observer movement, depends on player's observer mode
-	MOVETYPE_CUSTOM,			// Allows the entity to describe its own physics
-
-	// should always be defined as the last item in the list
-	MOVETYPE_LAST		= MOVETYPE_CUSTOM,
-
-	MOVETYPE_MAX_BITS	= 4
+enum MoveType_t : uint8_t
+{	
+	MOVETYPE_NONE = 0x0,
+	MOVETYPE_OBSOLETE = 0x1,
+	MOVETYPE_WALK = 0x2,
+	MOVETYPE_STEP = 0x3,
+	MOVETYPE_FLY = 0x4,
+	MOVETYPE_FLYGRAVITY = 0x5,
+	MOVETYPE_VPHYSICS = 0x6,
+	MOVETYPE_PUSH = 0x7,
+	MOVETYPE_NOCLIP = 0x8,
+	MOVETYPE_OBSERVER = 0x9,
+	MOVETYPE_LADDER = 0xa,
+	MOVETYPE_CUSTOM = 0xb,
+	MOVETYPE_LAST = 0xc,
+	MOVETYPE_MAX_BITS = 0x5,
 };
 
 // edict->movecollide values
-enum MoveCollide_t
+enum MoveCollide_t : uint8_t
 {
 	MOVECOLLIDE_DEFAULT = 0,
 
@@ -185,7 +182,7 @@ enum MoveCollide_t
 // Solid type basically describes how the bounding volume of the object is represented
 // NOTE: SOLID_BBOX MUST BE 2, and SOLID_VPHYSICS MUST BE 6
 // NOTE: These numerical values are used in the FGD by the prop code (see prop_dynamic)
-enum SolidType_t
+enum SolidType_t : uint8_t
 {
 	SOLID_NONE			= 0,	// no solid model
 	SOLID_BSP			= 1,	// a BSP tree
@@ -194,6 +191,7 @@ enum SolidType_t
 	SOLID_OBB_YAW		= 4,	// an OBB, constrained so that it can only yaw
 	SOLID_CUSTOM		= 5,	// Always call into the entity for tests
 	SOLID_VPHYSICS		= 6,	// solid vphysics object, get vcollide from the model and collide with that
+	SOLID_CAPSULE		= 7,
 	SOLID_LAST,
 };
 
@@ -225,12 +223,6 @@ inline bool IsSolid( SolidType_t solidType, int nSolidFlags )
 }
 
 
-// m_lifeState values
-#define	LIFE_ALIVE				0 // alive
-#define	LIFE_DYING				1 // playing death animation or still falling off of a ledge waiting to hit ground
-#define	LIFE_DEAD				2 // dead. lying still.
-#define LIFE_RESPAWNABLE		3
-#define LIFE_DISCARDBODY		4
 
 // entity effects
 enum
@@ -315,7 +307,7 @@ enum RenderMode_t
 	kRenderTransAlphaAdd,	// src + dest*(1-a)
 	kRenderWorldGlow,		// Same as kRenderGlow but not fixed size in screen space
 	kRenderNone,			// Don't render.
-
+	kRenderDevVisualizer,
 	kRenderModeCount,		// must be last
 };
 

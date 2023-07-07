@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -12,7 +12,7 @@
 #endif
 
 
-enum SolidType_t;
+enum SolidType_t : uint8_t;
 class IHandleEntity;
 struct Ray_t;
 struct model_t;

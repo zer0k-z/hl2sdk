@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -37,7 +37,28 @@ public:
 	int				framecount;
 	// Non-paused frametime
 	float			absoluteframetime;
-        float			absoluteframestarttimestddev;
+	float			absoluteframestarttimestddev;
+
+	// current maxplayers setting
+	int				maxClients;
+
+
+	// NOTE: bogus locations for the next 3 variables for testing, not tested!
+	// interpolation amount ( client-only ) based on fraction of next tick which has elapsed
+	float			interpolation_amount;
+	int				simTicksThisFrame;
+
+	int				network_protocol;
+
+
+	unsigned long long (*MaybeCheckCurtime)(int isInSimulation);
+
+	// TODO: does this even exist anymore?
+	// current saverestore data
+	// CSaveRestoreData* pSaveData;
+
+	// Time spent on last server or client frame (has nothing to do with think intervals)
+	float			frametime;
 
 	// Current time 
 	//
@@ -55,36 +76,25 @@ public:
 	//   - During prediction, this is based on the client's current tick:
 	//     [client_current_tick * tick_interval]
 	float			curtime;
-	
-	// Time spent on last server or client frame (has nothing to do with think intervals)
-	float			frametime;
-	// current maxplayers setting
-	int				maxClients;
+
+	unsigned char unknown2[0x4];
+
+	// NOTE: bogus locations for the next 3 variables for testing, not tested!
+	// Set to true in client code.
+	bool			m_bClient;
+
+	// 100 (i.e., tickcount is rounded down to this base and then the "delta" from this base is networked
+	int				nTimestampNetworkingBase;
+	// 32 (entindex() % nTimestampRandomizeWindow ) is subtracted from gpGlobals->tickcount to set the networking basis, prevents
+	//  all of the entities from forcing a new PackedEntity on the same tick (i.e., prevents them from getting lockstepped on this)
+	int				nTimestampRandomizeWindow;
+
 
 	// Simulation ticks - does not increase when game is paused
 	int				tickcount;
 
 	// Simulation tick interval
 	float			interval_per_tick;
-
-	// interpolation amount ( client-only ) based on fraction of next tick which has elapsed
-	float			interpolation_amount;
-	int				simTicksThisFrame;
-
-	int				network_protocol;
-
-	// current saverestore data
-	CSaveRestoreData *pSaveData;
-
-private:
-	// Set to true in client code.
-	bool			m_bClient;
-
-	// 100 (i.e., tickcount is rounded down to this base and then the "delta" from this base is networked
-	int				nTimestampNetworkingBase;   
-	// 32 (entindex() % nTimestampRandomizeWindow ) is subtracted from gpGlobals->tickcount to set the networking basis, prevents
-	//  all of the entities from forcing a new PackedEntity on the same tick (i.e., prevents them from getting lockstepped on this)
-	int				nTimestampRandomizeWindow;  
 	
 };
 

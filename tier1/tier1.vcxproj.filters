@@ -71,9 +71,6 @@
     <ClCompile Include="uniqueid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utlbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utlbufferutil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
