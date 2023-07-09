@@ -141,7 +141,7 @@
 #define FL_FREEZING				(1<<31) // We're becoming frozen!
 
 // edict->movetype values
-enum MoveType_t : uint8_t
+enum MoveType_t : uint8
 {
 	MOVETYPE_NONE		= 0,	// never moves
 	MOVETYPE_OBSOLETE,
@@ -163,7 +163,7 @@ enum MoveType_t : uint8_t
 };
 
 // edict->movecollide values
-enum MoveCollide_t : uint8_t
+enum MoveCollide_t : uint8
 {
 	MOVECOLLIDE_DEFAULT = 0,
 
