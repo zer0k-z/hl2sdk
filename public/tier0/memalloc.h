@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: This header should never be used directly from leaf code!!!
 // Instead, just add the file memoverride.cpp into your project and all this
@@ -402,7 +402,7 @@ public:
 
 //-----------------------------------------------------------------------------
 
-#if defined(MSVC) && ( defined(_DEBUG) || defined(USE_MEM_DEBUG) )
+#if 0// defined(MSVC) && ( defined(_DEBUG) || defined(USE_MEM_DEBUG) )
 
 	#pragma warning(disable:4290)
 	#pragma warning(push)

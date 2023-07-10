@@ -13,8 +13,8 @@
 
 #include "Sprite.h"
 
-enum MoveType_t : uint8_t;
-enum MoveCollide_t : uint8_t;
+enum MoveType_t : uint8;
+enum MoveCollide_t : uint8;
 
 
 //=============================================================================

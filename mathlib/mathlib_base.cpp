@@ -24,7 +24,6 @@
 #include "mathlib/mathlib.h"
 #include "mathlib/vector.h"
 #if !defined( _X360 )
-#include "sse.h"
 #endif
 
 #include "mathlib/ssemath.h"
@@ -3236,15 +3235,15 @@ void MathLib_Init( float gamma, float texGamma, float brightness, int overbright
 	{
 		s_bSSEEnabled = true;
 
-		// Select the SSE specific routines if available
-		pfVectorNormalizeFast = _SSE_VectorNormalizeFast;
-		pfInvRSquared = _SSE_InvRSquared;
-		pfSqrt = _SSE_Sqrt;
-		pfRSqrt = _SSE_RSqrtAccurate;
-		pfRSqrtFast = _SSE_RSqrtFast;
 #ifdef _WIN32
-		pfFastSinCos = _SSE_SinCos;
-		pfFastCos = _SSE_cos;
+		// Select the SSE specific routines if available
+		//pfVectorNormalizeFast = _SSE_VectorNormalizeFast;
+		//pfInvRSquared = _SSE_InvRSquared;
+		//pfSqrt = _SSE_Sqrt;
+		//pfRSqrt = _SSE_RSqrtAccurate;
+		//pfRSqrtFast = _SSE_RSqrtFast;
+		//pfFastSinCos = _SSE_SinCos;
+		//pfFastCos = _SSE_cos;
 #endif
 	}
 	else
@@ -3256,8 +3255,8 @@ void MathLib_Init( float gamma, float texGamma, float brightness, int overbright
 	{
 		s_bSSE2Enabled = true;
 #ifdef _WIN32
-		pfFastSinCos = _SSE2_SinCos;
-		pfFastCos = _SSE2_cos;
+		//pfFastSinCos = _SSE2_SinCos;
+		//pfFastCos = _SSE2_cos;
 #endif
 	} 
 	else

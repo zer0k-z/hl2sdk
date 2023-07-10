@@ -57,9 +57,6 @@
     <ClCompile Include="sparse_convolution_noise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sseconst.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -144,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="noisedata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
