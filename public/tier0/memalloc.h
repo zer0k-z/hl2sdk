@@ -402,7 +402,7 @@ public:
 
 //-----------------------------------------------------------------------------
 
-#if 0// defined(MSVC) && ( defined(_DEBUG) || defined(USE_MEM_DEBUG) )
+#if defined(MSVC) && ( defined(_DEBUG) || defined(USE_MEM_DEBUG) )
 
 	#pragma warning(disable:4290)
 	#pragma warning(push)
