@@ -11,6 +11,13 @@
 #pragma once
 #endif
 
+enum GlobalVarsUsageWarning_t : __int32
+{
+	GV_RENDERTIME_CALLED_DURING_SIMULATION = 0x0,
+	GV_CURTIME_CALLED_DURING_RENDERING = 0x1,
+};
+
+typedef void (*FnGlobalVarsWarningFunc)(GlobalVarsUsageWarning_t);
 class CSaveRestoreData;
 
 //-----------------------------------------------------------------------------
@@ -20,101 +27,34 @@ class CGlobalVarsBase
 {
 public:
 
-	CGlobalVarsBase( bool bIsClient );
-	
-	// This can be used to filter debug output or to catch the client or server in the act.
-	bool IsClient() const;
-
-	// for encoding m_flSimulationTime, m_flAnimTime
-	int GetNetworkBase( int nTick, int nEntity );
+	CGlobalVarsBase();
 
 public:
-	
-	// Absolute time (per frame still - Use Plat_FloatTime() for a high precision real time 
-	//  perf clock, but not that it doesn't obey host_timescale/host_framerate)
-	float			realtime;
-	// Absolute frame counter - continues to increase even if game is paused
-	int				framecount;
-	// Non-paused frametime
-	float			absoluteframetime;
-	float			absoluteframestarttimestddev;
 
-	// current maxplayers setting
-	int				maxClients;
-
-
-	// NOTE: bogus locations for the next 3 variables for testing, not tested!
-	// interpolation amount ( client-only ) based on fraction of next tick which has elapsed
-	float			interpolation_amount;
-	int				simTicksThisFrame;
-
-	int				network_protocol;
-
-
-	unsigned long long (*MaybeCheckCurtime)(int isInSimulation);
-
-	// TODO: does this even exist anymore?
-	// current saverestore data
-	// CSaveRestoreData* pSaveData;
-
-	// Time spent on last server or client frame (has nothing to do with think intervals)
-	float			frametime;
-
-	// Current time 
-	//
-	// On the client, this (along with tickcount) takes a different meaning based on what
-	// piece of code you're in:
-	// 
-	//   - While receiving network packets (like in PreDataUpdate/PostDataUpdate and proxies),
-	//     this is set to the SERVER TICKCOUNT for that packet. There is no interval between
-	//     the server ticks.
-	//     [server_current_Tick * tick_interval]
-	//
-	//   - While rendering, this is the exact client clock 
-	//     [client_current_tick * tick_interval + interpolation_amount]
-	//
-	//   - During prediction, this is based on the client's current tick:
-	//     [client_current_tick * tick_interval]
-	float			curtime;
-
-	unsigned char unknown2[0x4];
-
-	// NOTE: bogus locations for the next 3 variables for testing, not tested!
-	// Set to true in client code.
-	bool			m_bClient;
-
-	// 100 (i.e., tickcount is rounded down to this base and then the "delta" from this base is networked
-	int				nTimestampNetworkingBase;
-	// 32 (entindex() % nTimestampRandomizeWindow ) is subtracted from gpGlobals->tickcount to set the networking basis, prevents
-	//  all of the entities from forcing a new PackedEntity on the same tick (i.e., prevents them from getting lockstepped on this)
-	int				nTimestampRandomizeWindow;
-
-
-	// Simulation ticks - does not increase when game is paused
-	int				tickcount;
-
-	// Simulation tick interval
-	float			interval_per_tick;
-	
+	float realtime;
+	int framecount;
+	float absoluteframetime;
+	float absoluteframestarttimestddev;
+	int maxClients;
+	// int __pad0001; // Padding
+	int unknown1; // command queue related
+	int unknown2; // command queue related
+	FnGlobalVarsWarningFunc m_pfnWarningFunc;
+	float frametime;
+	float curtime;
+	float rendertime;
+	float unknown3; // command queue + interpolation related 
+	float unknown4; // command queue + interpolation related
+	bool m_bInSimulation;
+	bool m_bEnableAssertions;
+	int tickcount;
+	float interval_per_tick;
 };
 
-inline int CGlobalVarsBase::GetNetworkBase( int nTick, int nEntity )
-{
-	int nEntityMod = nEntity % nTimestampRandomizeWindow;
-	int nBaseTick = nTimestampNetworkingBase * (int)( ( nTick - nEntityMod ) / nTimestampNetworkingBase );
-	return nBaseTick;
-}
 
-inline CGlobalVarsBase::CGlobalVarsBase( bool bIsClient ) :
-	m_bClient( bIsClient ),
-	nTimestampNetworkingBase( 100 ),
-	nTimestampRandomizeWindow( 32 )
+inline CGlobalVarsBase::CGlobalVarsBase()
 {
 }
 
-inline bool CGlobalVarsBase::IsClient() const
-{
-	return m_bClient;
-}
 
 #endif // GLOBALVARS_BASE_H
