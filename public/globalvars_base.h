@@ -11,10 +11,10 @@
 #pragma once
 #endif
 
-enum GlobalVarsUsageWarning_t : __int32
+enum GlobalVarsUsageWarning_t
 {
-	GV_RENDERTIME_CALLED_DURING_SIMULATION = 0x0,
-	GV_CURTIME_CALLED_DURING_RENDERING = 0x1,
+	GV_RENDERTIME_CALLED_DURING_SIMULATION,
+	GV_CURTIME_CALLED_DURING_RENDERING
 };
 
 typedef void (*FnGlobalVarsWarningFunc)(GlobalVarsUsageWarning_t);
@@ -33,28 +33,33 @@ public:
 
 	float realtime;
 	int framecount;
+
 	float absoluteframetime;
 	float absoluteframestarttimestddev;
+
 	int maxClients;
-	// int __pad0001; // Padding
+
 	int unknown1; // command queue related
 	int unknown2; // command queue related
+
 	FnGlobalVarsWarningFunc m_pfnWarningFunc;
+
 	float frametime;
 	float curtime;
 	float rendertime;
+
 	float unknown3; // command queue + interpolation related 
 	float unknown4; // command queue + interpolation related
+
 	bool m_bInSimulation;
 	bool m_bEnableAssertions;
+
 	int tickcount;
 	float interval_per_tick;
 };
 
-
 inline CGlobalVarsBase::CGlobalVarsBase()
 {
 }
-
 
 #endif // GLOBALVARS_BASE_H
