@@ -6,10 +6,13 @@
 #endif
 
 #include "tier0/platform.h"
+#include "strtools.h"
 
 class CFormatStringElement;
 class IFormatOutputStream;
-enum EStringConvertErrorPolicy;
+
+template<size_t MAX_SIZE, bool AllowHeapAllocation>
+class CBufferStringGrowable;
 
 /*
 	Main idea of CBufferString is to provide the base class for the CBufferStringGrowable wich implements stack allocation
@@ -66,11 +69,11 @@ public:
 
 public:
 	DLL_CLASS_IMPORT const char *AppendConcat(int, const char * const *, const int *, bool bIgnoreAlignment = false);
-	DLL_CLASS_IMPORT const char *AppendConcat(const char *, const char *, ...);
+	DLL_CLASS_IMPORT const char *AppendConcat(const char *, const char *, ...) FMTFUNCTION(3, 4);
 	DLL_CLASS_IMPORT const char *AppendConcatV(const char *, const char *, va_list, bool bIgnoreAlignment = false);
-	DLL_CLASS_IMPORT const char *Concat(const char *, const char *, ...);
+	DLL_CLASS_IMPORT const char *Concat(const char *, const char *, ...) FMTFUNCTION(3, 4);
 
-	DLL_CLASS_IMPORT int AppendFormat(const char *pFormat, ...);
+	DLL_CLASS_IMPORT int AppendFormat(const char *pFormat, ...) FMTFUNCTION(2, 3);
 	DLL_CLASS_IMPORT int AppendFormatV(const char *pFormat, va_list pData);
 
 	DLL_CLASS_IMPORT const char *AppendRepeat(char cChar, int nChars, bool bIgnoreAlignment = false);
@@ -105,7 +108,7 @@ public:
 	DLL_CLASS_IMPORT const char *FixSlashes(char cSeparator = CORRECT_PATH_SEPARATOR);
 	DLL_CLASS_IMPORT const char *FixupPathName(char cSeparator);
 
-	DLL_CLASS_IMPORT int Format(const char *pFormat, ...);
+	DLL_CLASS_IMPORT int Format(const char *pFormat, ...) FMTFUNCTION(2, 3);
 	DLL_CLASS_IMPORT void FormatTo(IFormatOutputStream* pOutputStream, CFormatStringElement pElement) const;
 
 protected:
@@ -171,8 +174,8 @@ public:
 	DLL_CLASS_IMPORT bool StartsWith(const char *pMatch) const;
 	DLL_CLASS_IMPORT bool StartsWith_FastCaseInsensitive(const char *pMatch) const;
 
-	DLL_CLASS_IMPORT const char *StrAppendFormat(const char *pFormat, ...);
-	DLL_CLASS_IMPORT const char *StrFormat(const char *pFormat, ...);
+	DLL_CLASS_IMPORT const char *StrAppendFormat(const char *pFormat, ...) FMTFUNCTION(2, 3);
+	DLL_CLASS_IMPORT const char *StrFormat(const char *pFormat, ...) FMTFUNCTION(2, 3);
 
 	DLL_CLASS_IMPORT const char *StripExtension();
 	DLL_CLASS_IMPORT const char *StripTrailingSlash();
