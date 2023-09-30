@@ -3,8 +3,8 @@
 // idk
 typedef long __int64;
 
-// It's not void, but I just write it as that right now
-void CEntityClass::Unserialize() {
+// If it's really __int64 for the function is the other question
+__int64 CEntityClass::Unserialize() {
   __int64 entity_index; // v8, e.g. ent_attachments entity_index
   const char* entity_className; // v7, e.g. weapon_glock
 
