@@ -95,6 +95,7 @@ public:
 	virtual void		SetShowNetMessages( bool show ) = 0;
 
 	virtual void		unk201() = 0;
+	virtual void		unk202() = 0;
 };
 
 #endif // INETCHANNELINFO_H
