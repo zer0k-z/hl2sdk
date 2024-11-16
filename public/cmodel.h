@@ -136,8 +136,13 @@ struct Ray_t
 	{
 		m_Mesh.m_vMins = vMins;
 		m_Mesh.m_vMaxs = vMaxs;
-		m_Mesh.m_pVertices = pVertices;
-		m_Mesh.m_nNumVertices = nNumVertices;
+		m_Mesh.m_Vertices.RemoveAll();
+		for (int i = 0; i < nNumVertices; i++)
+		{
+			m_Mesh.m_Vertices.AddToTail(pVertices[i]);
+		}
+		m_Mesh.m_pVertices = m_Mesh.m_Vertices.Base();
+		m_Mesh.m_nNumVertices = m_Mesh.m_Vertices.Count();
 		m_eType = RAY_TYPE_MESH;
 	}
 	
