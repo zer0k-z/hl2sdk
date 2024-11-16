@@ -171,6 +171,7 @@ struct Ray_t
 		Vector m_vMaxs;
 		const Vector* m_pVertices;
 		int m_nNumVertices;
+		CUtlVector<Vector> m_Vertices;
 	};
 	
 	union
